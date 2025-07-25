@@ -148,7 +148,8 @@ const addNewWorkout = async () => {
   const token = localStorage.getItem("fittrack-app-token");
 
   try {
-    await addWorkout(token, { workoutString: workout });
+    const response =await addWorkout(token, { workoutString: workout });
+    console.log(response)
     toast.success("Workout added successfully!");
     await dashboardData();
     await getTodaysWorkout();
