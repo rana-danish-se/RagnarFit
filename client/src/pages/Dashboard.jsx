@@ -76,24 +76,7 @@ const Dashboard = () => {
 -30 kg
 -10 min`);
 
-  // const dashboardData = async () => {
-  //   setLoading(true);
-  //   const token = localStorage.getItem("fittrack-app-token");
-  //   await getDashboardDetails(token).then((res) => {
-  //     setData(res.data);
-  //     console.log(res.data);
-  //     setLoading(false);
-  //   });
-  // };
-  // const getTodaysWorkout = async () => {
-  //   setLoading(true);
-  //   const token = localStorage.getItem("fittrack-app-token");
-  //   await getWorkouts(token, "").then((res) => {
-  //     setTodaysWorkouts(res?.data?.todaysWorkouts);
-  //     console.log(res.data);
-  //     setLoading(false);
-  //   });
-  // };
+
 
   const addNewWorkout = async () => {
     setButtonLoading(true);
@@ -143,24 +126,6 @@ const getTodaysWorkout = async () => {
     setLoading(false);
   }
 };
-
-// const addNewWorkout = async () => {
-//   setButtonLoading(true);
-//   const token = localStorage.getItem("fittrack-app-token");
-
-//   try {
-//     const response =await addWorkout(token, { workoutString: workout });
-//     console.log(response)
-//     toast.success("Workout added successfully!");
-//     await dashboardData();
-//     await getTodaysWorkout();
-//   } catch (error) {
-//     console.error(error);
-//     toast.error("Failed to add workout");
-//   } finally {
-//     setButtonLoading(false);
-//   }
-// };
 
   useEffect(() => {
     dashboardData();
