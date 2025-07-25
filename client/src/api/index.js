@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  // baseURL: "https://ragnar-fit.vercel.app/api",
-  baseURL: "http://localhost:8080/api",
+  baseURL: "https://ragnar-fit.vercel.app/api",
+  // baseURL: "http://localhost:8080/api",
 });
 
 export const UserSignUp = async (data) => API.post("/user/signup", data);
