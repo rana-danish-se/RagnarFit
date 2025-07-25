@@ -95,19 +95,20 @@ const Dashboard = () => {
   //   });
   // };
 
-  // const addNewWorkout = async () => {
-  //   setButtonLoading(true);
-  //   const token = localStorage.getItem("fittrack-app-token");
-  //   await addWorkout(token, { workoutString: workout })
-  //     .then((res) => {
-  //       dashboardData();
-  //       getTodaysWorkout();
-  //       setButtonLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       alert(err);
-  //     });
-  // };
+  const addNewWorkout = async () => {
+    setButtonLoading(true);
+    const token = localStorage.getItem("fittrack-app-token");
+    await addWorkout(token, { workoutString: workout })
+      .then((res) => {
+        dashboardData();
+        getTodaysWorkout();
+        setButtonLoading(false);
+        toast.success("Workout Added");
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  };
 
 
 
@@ -143,23 +144,23 @@ const getTodaysWorkout = async () => {
   }
 };
 
-const addNewWorkout = async () => {
-  setButtonLoading(true);
-  const token = localStorage.getItem("fittrack-app-token");
+// const addNewWorkout = async () => {
+//   setButtonLoading(true);
+//   const token = localStorage.getItem("fittrack-app-token");
 
-  try {
-    const response =await addWorkout(token, { workoutString: workout });
-    console.log(response)
-    toast.success("Workout added successfully!");
-    await dashboardData();
-    await getTodaysWorkout();
-  } catch (error) {
-    console.error(error);
-    toast.error("Failed to add workout");
-  } finally {
-    setButtonLoading(false);
-  }
-};
+//   try {
+//     const response =await addWorkout(token, { workoutString: workout });
+//     console.log(response)
+//     toast.success("Workout added successfully!");
+//     await dashboardData();
+//     await getTodaysWorkout();
+//   } catch (error) {
+//     console.error(error);
+//     toast.error("Failed to add workout");
+//   } finally {
+//     setButtonLoading(false);
+//   }
+// };
 
   useEffect(() => {
     dashboardData();
