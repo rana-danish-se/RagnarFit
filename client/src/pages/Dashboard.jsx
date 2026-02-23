@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
@@ -66,7 +66,6 @@ const CardWrapper = styled.div`
 `;
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(false);
   const [data, setData] = useState();
   const [buttonLoading, setButtonLoading] = useState(false);
   const [todaysWorkouts, setTodaysWorkouts] = useState([]);
@@ -105,42 +104,32 @@ const Dashboard = () => {
 
 
 
-  const dashboardData = async () => {
-  setLoading(true);
-  const token = localStorage.getItem("fittrack-app-token");
+  const dashboardData = useCallback(async () => {
+    const token = localStorage.getItem("fittrack-app-token");
+    try {
+      const res = await getDashboardDetails(token);
+      setData(res.data);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to fetch dashboard data");
+    }
+  }, []);
 
-  try {
-    const res = await getDashboardDetails(token);
-    setData(res.data);
-    console.log(res.data);
-  } catch (error) {
-    console.error(error);
-    toast.error("Failed to fetch dashboard data");
-  } finally {
-    setLoading(false);
-  }
-};
-
-const getTodaysWorkout = async () => {
-  setLoading(true);
-  const token = localStorage.getItem("fittrack-app-token");
-
-  try {
-    const res = await getWorkouts(token, "");
-    setTodaysWorkouts(res?.data?.todaysWorkouts);
-    console.log(res.data);
-  } catch (error) {
-    console.error(error);
-    toast.error("Failed to fetch today's workouts");
-  } finally {
-    setLoading(false);
-  }
-};
+  const getTodaysWorkout = useCallback(async () => {
+    const token = localStorage.getItem("fittrack-app-token");
+    try {
+      const res = await getWorkouts(token, "");
+      setTodaysWorkouts(res?.data?.todaysWorkouts);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to fetch today's workouts");
+    }
+  }, []);
 
   useEffect(() => {
     dashboardData();
     getTodaysWorkout();
-  }, []);
+  }, [dashboardData, getTodaysWorkout]);
   return (
     <Container>
       <Wrapper>
