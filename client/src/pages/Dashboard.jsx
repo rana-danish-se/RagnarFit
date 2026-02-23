@@ -70,26 +70,36 @@ const Dashboard = () => {
   const [data, setData] = useState();
   const [buttonLoading, setButtonLoading] = useState(false);
   const [todaysWorkouts, setTodaysWorkouts] = useState([]);
-  const [workout, setWorkout] = useState(`#Legs
--Back Squat
--5 setsX15 reps
--30 kg
--10 min`);
-
-
+  const [workout, setWorkout] = useState({
+    category: "",
+    workoutName: "",
+    sets: "",
+    reps: "",
+    weight: "",
+    duration: "",
+  });
 
   const addNewWorkout = async () => {
     setButtonLoading(true);
     const token = localStorage.getItem("fittrack-app-token");
-    await addWorkout(token, { workoutString: workout })
+    await addWorkout(token, { workouts: [workout] })
       .then((res) => {
         dashboardData();
         getTodaysWorkout();
         setButtonLoading(false);
+        setWorkout({
+          category: "",
+          workoutName: "",
+          sets: "",
+          reps: "",
+          weight: "",
+          duration: "",
+        });
         toast.success("Workout Added");
       })
       .catch((err) => {
-        toast.error(err);
+        toast.error(err?.response?.data?.message || "Failed to add workout");
+        setButtonLoading(false);
       });
   };
 

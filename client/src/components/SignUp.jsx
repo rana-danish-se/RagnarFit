@@ -42,21 +42,18 @@ const SignUp = () => {
   };
 
   const handelSignUp = async () => {
+    if (!validateInputs()) return;
     setLoading(true);
     setButtonDisabled(true);
-    if (validateInputs()) {
-      await UserSignUp({ name, email, password })
-        .then((res) => {
-          dispatch(loginSuccess(res.data));
-          toast.success("Account Created Success");
-          setLoading(false);
-          setButtonDisabled(false);
-        })
-        .catch((err) => {
-          toast.error(err.response.data.message);
-          setLoading(false);
-          setButtonDisabled(false);
-        });
+    try {
+      const res = await UserSignUp({ name, email, password });
+      dispatch(loginSuccess(res.data));
+      toast.success("Account Created Successfully");
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+      setButtonDisabled(false);
     }
   };
   return (
