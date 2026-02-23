@@ -9,7 +9,11 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://ragnarfit.vercel.app"],
+    origin: [
+      "http://localhost:3000",
+      "https://ragnarfit.vercel.app",
+      "https://ragnar-fitness.vercel.app",
+    ],
     credentials: true,
   })
 );
