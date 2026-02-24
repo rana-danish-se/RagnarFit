@@ -30,39 +30,39 @@ border: 1px solid ${({ theme }) => theme.secondary};
   background: ${theme.primary};
 `}
 
-  ${({ isDisabled }) =>
-    isDisabled &&
+  ${({ $isDisabled }) =>
+    $isDisabled &&
     `
   opacity: 0.8;
   cursor: not-allowed;
 
   `}
-  ${({ isLoading }) =>
-    isLoading &&
+  ${({ $isLoading }) =>
+    $isLoading &&
     `
     opacity: 0.8;
   cursor: not-allowed;
 `}
-${({ flex }) =>
-    flex &&
+${({ $flex }) =>
+    $flex &&
     `
     flex: 1;
 `}
 
-${({ small }) =>
-    small &&
+${({ $small }) =>
+    $small &&
     `
 padding: 10px 28px;
 `}
-  ${({ outlined, theme }) =>
-    outlined &&
+  ${({ $outlined, theme }) =>
+    $outlined &&
     `
 background: transparent;
 color: ${theme.primary};
   box-shadow: none;
 `}
-  ${({ full }) =>
-    full &&
+  ${({ $full }) =>
+    $full &&
     `
   width: 100%;`}
 `;
@@ -83,13 +83,13 @@ const button = ({
   return (
     <Button
       onClick={() => !isDisabled && !isLoading && onClick()}
-      isDisabled={isDisabled}
+      $isDisabled={isDisabled}
       type={type}
-      isLoading={isLoading}
-      flex={flex}
-      small={small}
-      outlined={outlined}
-      full={full}
+      $isLoading={isLoading}
+      $flex={flex}
+      $small={small}
+      $outlined={outlined}
+      $full={full}
     >
       {isLoading && (
         <CircularProgress

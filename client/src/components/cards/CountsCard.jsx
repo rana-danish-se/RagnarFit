@@ -51,8 +51,8 @@ const Span = styled.div`
     font-size: 12px;
   }
 
-  ${({ positive, theme }) =>
-    positive
+  ${({ $positive, theme }) =>
+    $positive
       ? `
   color: ${theme.green};`
       : `
@@ -65,9 +65,9 @@ const Icon = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  ${({ color, bg }) => `
-  background: ${bg};
-  color: ${color};
+  ${({ $color, $bg }) => `
+  background: ${$bg};
+  color: ${$color};
   `}
 `;
 
@@ -88,11 +88,11 @@ const CountsCard = ({ item, data }) => {
         <Value>
           {data && (data[item.key] ?? 0).toFixed(2)}
           <Unit>{item.unit}</Unit>
-          <Span positive>(+10%)</Span>
+          <Span $positive>(+10%)</Span>
         </Value>
         <Desc>{item.desc}</Desc>
       </Left>
-      <Icon color={item.color} bg={item.lightColor}>
+      <Icon $color={item.color} $bg={item.lightColor}>
         {item.icon}
       </Icon>
     </Card>

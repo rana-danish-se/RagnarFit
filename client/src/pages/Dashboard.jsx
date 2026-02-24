@@ -136,7 +136,7 @@ const Dashboard = () => {
         <Title>Dashboard</Title>
         <FlexWrap>
           {counts.map((item) => (
-            <CountsCard item={item} data={data} />
+            <CountsCard key={item.key} item={item} data={data} />
           ))}
         </FlexWrap>
 
@@ -155,7 +155,7 @@ const Dashboard = () => {
           <Title>Todays Workouts</Title>
           <CardWrapper>
             {todaysWorkouts.map((workout) => (
-              <WorkoutCard workout={workout} />
+              <WorkoutCard key={workout._id} workout={workout} />
             ))}
           </CardWrapper>
         </Section>

@@ -13,18 +13,18 @@ const Label = styled.label`
   font-size: 12px;
   color: ${({ theme }) => theme.text_primary};
   padding: 0px 4px;
-  ${({ error, theme }) =>
-    error &&
+  ${({ $error, theme }) =>
+    $error &&
     `
     color: ${theme.red};
   `}
-  ${({ small }) =>
-    small &&
+  ${({ $small }) =>
+    $small &&
     `
     font-size: 8px;
   `}
-  ${({ popup, theme }) =>
-    popup &&
+  ${({ $popup, theme }) =>
+    $popup &&
     `
   color: ${theme.popup_text_secondary};
   `}
@@ -43,31 +43,31 @@ const OutlinedInput = styled.div`
   &:focus-within {
     border-color: ${({ theme }) => theme.secondary};
   }
-  ${({ error, theme }) =>
-    error &&
+  ${({ $error, theme }) =>
+    $error &&
     `
     border-color: ${theme.red};
   `}
 
-  ${({ chipableInput, height, theme }) =>
-    chipableInput &&
+  ${({ $chipableInput, $height, theme }) =>
+    $chipableInput &&
     `
     background: ${theme.card};
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    min-height: ${height}
+    min-height: ${$height}
   `}
 
-  ${({ small }) =>
-    small &&
+  ${({ $small }) =>
+    $small &&
     `
     border-radius: 6px;
     padding: 8px 10px;
   `}
 
-  ${({ popup, theme }) =>
-    popup &&
+  ${({ $popup, theme }) =>
+    $popup &&
     `
   color: ${theme.popup_text_secondary};
   border: 0.5px solid ${theme.popup_text_secondary + 60};
@@ -84,14 +84,14 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
-  ${({ small }) =>
-    small &&
+  ${({ $small }) =>
+    $small &&
     `
     font-size: 12px;
   `}
 
-  ${({ popup, theme }) =>
-    popup &&
+  ${({ $popup, theme }) =>
+    $popup &&
     `
   color: ${theme.popup_text_secondary};
   `}
@@ -101,8 +101,8 @@ const Error = styled.p`
   font-size: 12px;
   margin: 0px 4px;
   color: ${({ theme }) => theme.red};
-  ${({ small }) =>
-    small &&
+  ${({ $small }) =>
+    $small &&
     `
     font-size: 8px;
   `}
@@ -147,16 +147,16 @@ const TextInput = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <Container small={small}>
-      <Label small={small} popup={popup} error={error}>
+    <Container>
+      <Label $small={small} $popup={popup} $error={error}>
         {label}
       </Label>
       <OutlinedInput
-        small={small}
-        popup={popup}
-        error={error}
-        chipableInput={chipableInput}
-        height={height}
+        $small={small}
+        $popup={popup}
+        $error={error}
+        $chipableInput={chipableInput}
+        $height={height}
       >
         {chipableInput ? (
           <ChipWrapper>
@@ -179,8 +179,8 @@ const TextInput = ({
         ) : (
           <>
             <Input
-              popup={popup}
-              small={small}
+              $popup={popup}
+              $small={small}
               as={textArea ? "textarea" : "input"}
               name={name}
               rows={rows}
@@ -207,7 +207,7 @@ const TextInput = ({
         )}
       </OutlinedInput>
       {error && (
-        <Error small={small} popup={popup}>
+        <Error $small={small}>
           {error}
         </Error>
       )}

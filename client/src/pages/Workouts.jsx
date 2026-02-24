@@ -6,6 +6,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers";
 import { getWorkouts } from "../api";
 import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   flex: 1;
@@ -79,10 +80,15 @@ const Workouts = () => {
   const getTodaysWorkout = useCallback(async () => {
     setLoading(true);
     const token = localStorage.getItem("fittrack-app-token");
-    await getWorkouts(token, date).then((res) => {
-      setTodaysWorkouts(res?.data?.todaysWorkouts);
+    try {
+      const res = await getWorkouts(token, date);
+      setTodaysWorkouts(res?.data?.todaysWorkouts || []);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to fetch workouts");
+    } finally {
       setLoading(false);
-    });
+    }
   }, [date]);
 
   useEffect(() => {
@@ -95,7 +101,7 @@ const Workouts = () => {
         
           <LocalizationProvider dateAdapter={AdapterDayjs}>
 <DateCalendar
-  onChange={(e) => setDate(`${e.$M + 1}/${e.$D}/${e.$y}`)}
+  onChange={(e) => setDate(e.format("MM/DD/YYYY"))}
   sx={{
     backgroundColor: "#ffffff",
     borderRadius: "12px",
@@ -123,7 +129,7 @@ const Workouts = () => {
             ) : (
               <CardWrapper>
                 {todaysWorkouts.map((workout) => (
-                  <WorkoutCard workout={workout} />
+                  <WorkoutCard key={workout._id} workout={workout} />
                 ))}
               </CardWrapper>
             )}

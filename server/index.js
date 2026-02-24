@@ -12,6 +12,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://ragnarfit.vercel.app",
+      "https://ragnar-fit.vercel.app",
       "https://ragnar-fitness.vercel.app",
     ],
     credentials: true,
@@ -39,20 +40,20 @@ app.use((err, req, res, next) => {
   });
 });
 
-const connectDB = () => {
+const connectDB = async () => {
   mongoose.set("strictQuery", true);
-  mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => console.log("Connected to Mongo DB"))
-    .catch((err) => {
-      console.error("failed to connect with mongo");
-      console.error(err);
-    });
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected to Mongo DB");
+  } catch (err) {
+    console.error("failed to connect with mongo");
+    console.error(err);
+  }
 };
 
 const startServer = async () => {
   try {
-    connectDB();
+    await connectDB();
     app.listen(8080, () => console.log("Server started on port 8080"));
   } catch (error) {
     console.log(error);
